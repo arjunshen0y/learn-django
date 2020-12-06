@@ -1,4 +1,4 @@
-"""test_project_two URL Configuration
+"""django_forms URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.1/topics/http/urls/
@@ -15,11 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from emphasis import views
+from sample_app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('help/',views.index,name ='index'),
-    path('users/',views.users,name = 'users'),
-    path('login/',views.login,name = 'login')
+    path('',views.index,name = 'index'),
+    path('forms/',views.form_name_view ,name='forms')
 ]
