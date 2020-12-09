@@ -3,7 +3,8 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    return render(request,'basic_app/index.html')
+    context_dict = {'value' : 'Mario Puzo'}
+    return render(request,'basic_app/index.html',context=context_dict)
 
 def other(request):
     return render(request, 'basic_app/other.html')
