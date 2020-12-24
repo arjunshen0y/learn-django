@@ -14,6 +14,12 @@
                     <li><a class="navbar-brand" href="{% url 'index' %}">Index</a></li>
                     <li><a class="navbar-brand" href="{% url 'basic_app:register' %}">Register</a></li>
                     <li><a class="navbar-brand" href="{% url 'admin:index' %}">Admin</a></li>
+                
+                {% if user.is_authenticated %}
+                    <li><a class="navbar-brand" href="{% url 'basic_app:logout' %}">Logout</a></li>
+                {% else %}
+                    <li><a class="navbar-brand" href="{% url 'basic_app:login' %}">Login</a></li>
+                {% endif %}
                 </ul>
             </div>
         </nav>

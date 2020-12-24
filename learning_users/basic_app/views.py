@@ -1,6 +1,13 @@
 from django.shortcuts import render
 from .forms import UserForm,UserExtra
 
+#Imports needed for Login
+
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseRedirect
+from django.contrib.auth import authenticate,login,logout
+
 # Create your views here.
 def index(request):
     return render(request, 'basic_app/index.html')
@@ -38,6 +45,38 @@ def register(request):
 
     return render(request, 'basic_app/registration.html',context={'user_form':user_form , 'profile_form' :profile_form, 'registered':registered})
 
-   
+def user_login(request):
+
+    if(request.method == 'POST'):
+        username = request.POST.get('username')  #recieves username and password from the form
+        password = request.POST.get('password')
+
+        user = authenticate(username = username, password= password)  #user variable is a boolean which holds the value returned by builtin authenticate fn
+           
+        if user:
+            if user.is_active:       #django checks if user is authenticated
+                login(request,user)  #inbuilt function which logs in automatically
+                return render(request,'basic_app/landing.html')
+
+            else:
+                return HttpResponse('The Account is Currently Inactive')
+            
+        else:       #if user hasnt registered yet
+
+            print("Username - {} and pswd - {}".format(username,password))      #outputs to console about details of invalid login attempts
+            return HttpResponse('Invalid login details, Please Check if you have Registered')
+
+    else:
+        return render(request,'basic_app/login.html')  #
+
+@login_required                                         #decorator will only run this function if user has logged in
+def user_logout(request):                   #logs out user
+    logout(request)                                     #inbuilt function
+    return HttpResponseRedirect(reverse('index'))
+
+@login_required
+def landing(request):
+    return render(request, 'basic_app/landing.html')
+
 
 

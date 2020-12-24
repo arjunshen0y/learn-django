@@ -1,0 +1,11 @@
+<html>
+    <head>
+        <title>Yo</title>
+    </head>
+    <body>
+        <form action="{% url 'accounts:login' %}" method="POST">
+            {% csrf_token %}
+            {{form.as_p}}
+        </form>
+    </body>
+</html>
